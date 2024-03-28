@@ -1,0 +1,11 @@
+{
+  "SECRET_KEY": "django-insecure-#2x6^*fn$&ayq%3r8ltyy%=&+0cr=@b=mt^kaloi6qm%^c@wh!",
+  "DEBUG": true,
+  "ALLOWED_HOSTS": ["*"],
+  "DB_NAME": "wallet",
+  "DB_USER": "root",
+  "DB_PASSWORD": "root",
+  "DB_HOST": "db",
+  "DB_PORT": "5432",
+  "BASE_URL": "http://localhost:8000"
+}
