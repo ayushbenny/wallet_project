@@ -1,7 +1,6 @@
+"""Urls for Wallet Manager"""
 from django.urls import path
-
 from .utils import CustomRefreshTokenObtainPairView, CustomTokenObtainPairView
-
 from .views import (
     ActivityTrackerAPIView,
     RegisterUserAPIView,

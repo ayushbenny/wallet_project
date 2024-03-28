@@ -1,3 +1,5 @@
+"""Decorators for Wallet Manager"""
+
 from rest_framework import status
 
 from .models import ActivityTracker, User

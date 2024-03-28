@@ -1,3 +1,5 @@
+"""Wallet Manger Views"""
+
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -11,6 +13,24 @@ from rest_framework.permissions import AllowAny
 
 
 class RegisterUserAPIView(APIView):
+    """
+    Endpoint for Registering a new User.
+
+    This endpoint allows the  users to register into the system by providing their details.
+    Upon successful user creation a new Wallet will be assigned to the same user with 0 amount as balance.
+    If the input data is not as in the expected format, then it will throw error as well.
+
+    Accepts a POST request with the following JSON payload:
+    {
+        "first_name": "string",
+        "last_name": "string",
+        "username": "string",
+        "user_email": "string",
+        "password": "string",
+        "phone_number": "string"
+    }
+    """
+
     authentication_classes = []
     permission_classes = [AllowAny]
 
@@ -27,6 +47,18 @@ class RegisterUserAPIView(APIView):
 
 
 class WalletAPIView(APIView):
+    """
+    Endpoint for creating a wallet for a user.
+
+    This endpoint allows to create a new wallet for the specified user with a balance of 0.
+    If the corresponding user is not found means then Error will be thrown.
+
+    Accepts a POST request with the following JSON payload:
+    {
+        "user_id": int
+    }
+    """
+
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         request_body = request.data
@@ -41,6 +73,22 @@ class WalletAPIView(APIView):
 
 
 class WalletDepositAPIView(APIView):
+    """
+    Endpoint for deposting funds into the Users wallet.
+
+    GET method:
+    Retrives the current balance of the User
+
+    POST method:
+    In this method, Fund will be deposited to the corresponding user and the activity will be stored in the Activity Tracker.
+    If the user is not found means then, Error will be thrown as well.
+
+    Accepts a POST request with the following JSON payload:
+    {
+        "balance": amount_to_deposit
+    }
+    """
+
     def get(self, request, *args, **kwargs):
         user_params = request.user
         wallet_obj = get_object_or_404(Wallet, user_id=user_params.id)
@@ -68,6 +116,19 @@ class WalletDepositAPIView(APIView):
 
 
 class WalletWithdrawAPIView(APIView):
+    """
+    Endpoint for withdrawing amount from user's wallet.
+
+    In this method, the user will be withdrawing particular amount of fund from the wallet.
+    After the successful withdrawal from the wallet, the record will be added into the Activity Tracker.
+    If the user tries to withdraw amount greater than the amount that is available in the wallet means then, it will throw error
+
+    Accepts a POST request with the following JSON payload:
+    {
+        "withdraw_amount": amount_to_withdraw
+    }
+    """
+
     @transaction.atomic
     @create_activity_tracker(
         transaction_type="withdrawal",
@@ -91,6 +152,19 @@ class WalletWithdrawAPIView(APIView):
 
 
 class ActivityTrackerAPIView(APIView):
+    """Endpoint to retrieve the Activity Tracker (History) of a particular user.
+
+    In this method, the functionality will return the activity log or history of transcations which includes
+    Deposit, Withdrawal and Transfer.
+
+    The filtering process is as follows:
+    transcation_type -> it will filter based on the Transcation type (for eg: deposit, withdrawal and transfer)
+    from_date -> it will filter data starting from the date that is given
+    to_date -> it will filter data till the date that is given
+
+    It will only filter data only if a record of the requested user is present in the database.
+    """
+
     def get(self, request, *args, **kwargs):
         user = request.user
         transaction_type_params = request.GET.get("transcation_type", None)
@@ -120,6 +194,19 @@ class ActivityTrackerAPIView(APIView):
 
 
 class TranserFundAPIView(APIView):
+    """
+    Endpoint to transfer the fund from one user to another user how should be present in the system.
+
+    There are multiple conditions that will be checked like whether the receiver is present in the system or not,
+    transfer amount is valid or not, balance check for the sending user and so on
+
+    Accepts a POST request with the following JSON payload:
+    {
+        "receiver_id": receiver_email,
+        "transfer_amount": transfer amount
+    }
+    """
+
     @transaction.atomic
     @create_activity_tracker(
         transaction_type="transfer",
