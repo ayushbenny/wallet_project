@@ -39,7 +39,7 @@ This is a Django RESTful API for managing user wallets and tracking activities r
 
 ## Usage
 
-    ### API Endpoints
+    API Endpoints
 
         1. Register User -> `POST /user/`
             - Create new user into the system and their associated wallet.
@@ -69,7 +69,7 @@ This is a Django RESTful API for managing user wallets and tracking activities r
             - Transfer the fund from one user's wallet to another user who is present in the system.
 
     
-    ### Authentication
+    Authentication
 
         - Authentication is handled using JWT tokens.
         - To authenticate, sned a POST request to `/api/token/` with username and password.
