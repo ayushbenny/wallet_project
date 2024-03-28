@@ -1,0 +1,331 @@
+{
+  "collection": {
+    "info": {
+      "_postman_id": "b0221b9b-d925-41ee-99b5-399b16491b9e",
+      "name": "Wallet Project",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "updatedAt": "2024-03-27T16:57:12.000Z",
+      "uid": "21654066-b0221b9b-d925-41ee-99b5-399b16491b9e",
+      "createdAt": null,
+      "lastUpdatedBy": null
+    },
+    "item": [
+      {
+        "name": "User",
+        "item": [
+          {
+            "name": "Register User",
+            "item": [
+              {
+                "name": "Register User",
+                "id": "b357b066-bd88-4085-ac00-d4be0657f569",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"first_name\": \"First\",\n    \"last_name\": \"Last\",\n    \"username\": \"user001\",\n    \"user_email\": \"user001@gmail.com\",\n    \"password\": \"Wallet1999@\",\n    \"phone_number\": \"123456789\"\n}",
+                    "options": { "raw": { "language": "json" } }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}user/",
+                    "host": ["{{base_url}}user"],
+                    "path": [""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-b357b066-bd88-4085-ac00-d4be0657f569"
+              }
+            ],
+            "id": "92d20517-c5a6-4852-9345-d5b8a357d52e",
+            "uid": "21654066-92d20517-c5a6-4852-9345-d5b8a357d52e"
+          },
+          {
+            "name": "Login User",
+            "item": [
+              {
+                "name": "Login User",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "47b74ef6-f063-460b-9403-f4e5e042e4a4",
+                      "exec": [
+                        "var jsonData = JSON.parse(responseBody);",
+                        "postman.setEnvironmentVariable(\"token\", jsonData.access);"
+                      ],
+                      "type": "text/javascript",
+                      "packages": {}
+                    }
+                  },
+                  {
+                    "listen": "prerequest",
+                    "script": {
+                      "id": "f053254b-d5c4-4cb6-88f6-88060454aea7",
+                      "exec": [""],
+                      "type": "text/javascript",
+                      "packages": {}
+                    }
+                  }
+                ],
+                "id": "c364d27e-9e97-4284-ad18-a6de06bfec36",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"user001\",\n    \"password\": \"Wallet1999@\"\n}",
+                    "options": { "raw": { "language": "json" } }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}api/token/",
+                    "host": ["{{base_url}}api"],
+                    "path": ["token", ""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-c364d27e-9e97-4284-ad18-a6de06bfec36"
+              }
+            ],
+            "id": "893cb37d-f6c8-4726-b2ad-150c2bb75735",
+            "uid": "21654066-893cb37d-f6c8-4726-b2ad-150c2bb75735"
+          }
+        ],
+        "id": "c5042867-e372-453e-9978-b2b11d90eecb",
+        "uid": "21654066-c5042867-e372-453e-9978-b2b11d90eecb"
+      },
+      {
+        "name": "Wallet",
+        "item": [
+          {
+            "name": "Deposit",
+            "item": [
+              {
+                "name": "Create Deposit",
+                "id": "a361c365-566c-468d-b768-c206d284024f",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"balance\": 100\n}",
+                    "options": { "raw": { "language": "json" } }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}api/wallet/deposit/",
+                    "host": ["{{base_url}}api"],
+                    "path": ["wallet", "deposit", ""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-a361c365-566c-468d-b768-c206d284024f"
+              }
+            ],
+            "id": "1636fbee-4445-477c-a394-706b08bb913b",
+            "uid": "21654066-1636fbee-4445-477c-a394-706b08bb913b"
+          },
+          {
+            "name": "Balance",
+            "item": [
+              {
+                "name": "Fetch Balance",
+                "id": "dd53b4fd-c21e-4e7e-866e-9b289b88bcc4",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{base_url}}api/wallet/deposit/",
+                    "host": ["{{base_url}}api"],
+                    "path": ["wallet", "deposit", ""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-dd53b4fd-c21e-4e7e-866e-9b289b88bcc4"
+              }
+            ],
+            "id": "bf1bdbcc-e0a1-4371-aa45-6ed972573c98",
+            "uid": "21654066-bf1bdbcc-e0a1-4371-aa45-6ed972573c98"
+          },
+          {
+            "name": "Withdraw",
+            "item": [
+              {
+                "name": "Withdraw Amount",
+                "id": "65544523-9a4d-4039-8911-ca310bb53d90",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"withdraw_amount\": 23\n}",
+                    "options": { "raw": { "language": "json" } }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}api/wallet/withdraw/",
+                    "host": ["{{base_url}}api"],
+                    "path": ["wallet", "withdraw", ""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-65544523-9a4d-4039-8911-ca310bb53d90"
+              }
+            ],
+            "id": "36ac62c0-5bf5-4d58-8217-7824ca42219d",
+            "uid": "21654066-36ac62c0-5bf5-4d58-8217-7824ca42219d"
+          },
+          {
+            "name": "Wallet Creation",
+            "item": [
+              {
+                "name": "Create Wallet",
+                "id": "6dbc6539-cbf0-435f-9e79-5f7015ada8fa",
+                "protocolProfileBehavior": { "disableBodyPruning": true },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"user_id\": 8\n}",
+                    "options": { "raw": { "language": "json" } }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}api/wallet/",
+                    "host": ["{{base_url}}api"],
+                    "path": ["wallet", ""]
+                  }
+                },
+                "response": [],
+                "uid": "21654066-6dbc6539-cbf0-435f-9e79-5f7015ada8fa"
+              }
+            ],
+            "id": "ddb524bc-2aae-44da-b344-6d737f7b5cb6",
+            "uid": "21654066-ddb524bc-2aae-44da-b344-6d737f7b5cb6"
+          }
+        ],
+        "id": "ebbf7608-8664-4746-b9b6-e028634d795f",
+        "uid": "21654066-ebbf7608-8664-4746-b9b6-e028634d795f"
+      },
+      {
+        "name": "Activity Tracker (History)",
+        "item": [
+          {
+            "name": "Fetch History",
+            "id": "a9093be1-f729-4d27-bdf2-06287ef525f8",
+            "protocolProfileBehavior": { "disableBodyPruning": true },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}api/activity_tracker/?transcation_type=deposit&from_date=2024-03-22&to_date=2024-03-28",
+                "host": ["{{base_url}}api"],
+                "path": ["activity_tracker", ""],
+                "query": [
+                  { "key": "transcation_type", "value": "deposit" },
+                  { "key": "from_date", "value": "2024-03-22" },
+                  { "key": "to_date", "value": "2024-03-28" }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "21654066-a9093be1-f729-4d27-bdf2-06287ef525f8"
+          }
+        ],
+        "id": "a1beb63a-7027-4f14-ab3f-0710c26ed9db",
+        "uid": "21654066-a1beb63a-7027-4f14-ab3f-0710c26ed9db"
+      },
+      {
+        "name": "Transfer Fund",
+        "item": [
+          {
+            "name": "Transfer Funds",
+            "id": "6230cee0-0b03-4a0f-bfe5-351eca87a288",
+            "protocolProfileBehavior": { "disableBodyPruning": true },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"receiver_id\": \"user002@gmail.com\",\n    \"transfer_amount\": 10\n}",
+                "options": { "raw": { "language": "json" } }
+              },
+              "url": {
+                "raw": "{{base_url}}api/transfer_funds/",
+                "host": ["{{base_url}}api"],
+                "path": ["transfer_funds", ""]
+              }
+            },
+            "response": [],
+            "uid": "21654066-6230cee0-0b03-4a0f-bfe5-351eca87a288"
+          }
+        ],
+        "id": "9bb26241-dcb3-4b98-9727-1fc5b0356670",
+        "uid": "21654066-9bb26241-dcb3-4b98-9727-1fc5b0356670"
+      }
+    ]
+  }
+}
