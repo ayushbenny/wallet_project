@@ -1,14 +1,10 @@
 from rest_framework import serializers
-from wallet_manager.regexp_validators import PasswordValidator
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from .models import ActivityTracker, User, Wallet
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    def validate_password(self, value):
-        password_obj = PasswordValidator.validate_password(value)
-        return password_obj
 
     class Meta:
         model = User
@@ -19,13 +15,16 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "user_email",
-            "password",
             "phone_number",
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        try:
+            validate_password(password=validated_data.get("password"), user=user)
+        except ValidationError as err:
+            raise serializers.ValidationError({"password": err.messages})
         return user
 
 

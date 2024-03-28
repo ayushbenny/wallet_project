@@ -8,12 +8,14 @@ from rest_framework_simplejwt.views import (
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
+        print(user,"::user")
         token = super().get_token(user)
         token["email"] = user.user_email
         return token
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
+    print("enter here")
     serializer_class = CustomTokenObtainPairSerializer
 
 
