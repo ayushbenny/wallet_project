@@ -9,9 +9,6 @@ This is a Django RESTful API for managing user wallets and tracking activities r
     - Django Rest Framework
     - PostgreSQL
 
-## Postman Collection
-
-    - https://api.postman.com/collections/21654066-b0221b9b-d925-41ee-99b5-399b16491b9e?access_key=PMAT-01HT290C2X6QDJRPNV9WKTGSBM
 
 ## Installation
 
