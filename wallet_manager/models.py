@@ -2,13 +2,19 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from .regexp_validators import NameValidator, PhoneNumberValidator
+
 
 class User(AbstractUser):
-    first_name = models.CharField(max_length=50, null=False, blank=False)
-    last_name = models.CharField(max_length=50, null=False, blank=False)
+    first_name = models.CharField(
+        max_length=50, null=False, blank=False, validators=[NameValidator.validate_name]
+    )
+    last_name = models.CharField(
+        max_length=50, null=False, blank=False, validators=[NameValidator.validate_name]
+    )
     user_email = models.EmailField(unique=True)
     user_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    phone_number = models.CharField(max_length=45)
+    phone_number = models.CharField(max_length=15, validators=[PhoneNumberValidator.validate_phone_number])
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)

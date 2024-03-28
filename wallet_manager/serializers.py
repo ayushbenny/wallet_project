@@ -1,8 +1,15 @@
 from rest_framework import serializers
+from wallet_manager.regexp_validators import PasswordValidator
 from .models import ActivityTracker, User, Wallet
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def validate_password(self, value):
+        password_obj = PasswordValidator.validate_password(value)
+        return password_obj
+
     class Meta:
         model = User
         fields = [
@@ -12,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "user_email",
+            "password",
             "phone_number",
         ]
         extra_kwargs = {"password": {"write_only": True}}

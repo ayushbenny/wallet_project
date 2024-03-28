@@ -127,6 +127,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+    {
+        'NAME': 'wallet_manager.regexp_validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'wallet_manager.regexp_validators.SpecialCharValidator',
+    },
 ]
 
 
